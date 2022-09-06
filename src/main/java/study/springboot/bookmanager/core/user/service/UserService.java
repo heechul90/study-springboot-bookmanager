@@ -13,8 +13,8 @@ import study.springboot.bookmanager.core.user.dto.UserSearchCondition;
 import study.springboot.bookmanager.core.user.repository.UserQueryRepository;
 import study.springboot.bookmanager.core.user.repository.UserRepository;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService {
