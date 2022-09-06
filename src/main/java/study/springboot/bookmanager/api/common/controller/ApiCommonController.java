@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import study.springboot.bookmanager.core.common.json.Error;
-import study.springboot.bookmanager.core.common.json.JsonResult;
+import study.springboot.bookmanager.core.common.json.ApiJsonError;
+import study.springboot.bookmanager.core.common.json.ApiJsonResult;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 public class ApiCommonController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public JsonResult methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-        List<Error> errors = e.getFieldErrors().stream()
-                .map(error -> new Error(
+    public ApiJsonResult methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        List<ApiJsonError> errors = e.getFieldErrors().stream()
+                .map(error -> new ApiJsonError(
                         error.getField(),
                         error.getDefaultMessage()
                 )).collect(Collectors.toList());
-        return JsonResult.ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), errors);
+        return ApiJsonResult.ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), errors);
     }
 
 

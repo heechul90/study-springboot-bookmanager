@@ -11,32 +11,32 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class JsonResult<T> {
+public class ApiJsonResult<T> {
 
     private LocalDateTime transaction_time;
     private HttpStatus status;
     private String message = "";
 
-    private List<Error> errors;
+    private List<ApiJsonError> errors;
     private T data;
 
-    public static <T> JsonResult<T> OK() {
-        return (JsonResult<T>) JsonResult.builder()
+    public static <T> ApiJsonResult<T> OK() {
+        return (ApiJsonResult<T>) ApiJsonResult.builder()
                 .transaction_time(LocalDateTime.now())
                 .status(HttpStatus.OK)
                 .build();
     }
 
-    public static <T> JsonResult<T> OK(T data) {
-        return (JsonResult<T>) JsonResult.builder()
+    public static <T> ApiJsonResult<T> OK(T data) {
+        return (ApiJsonResult<T>) ApiJsonResult.builder()
                 .transaction_time(LocalDateTime.now())
                 .status(HttpStatus.OK)
                 .data(data)
                 .build();
     }
 
-    public static <T> JsonResult<T> ERROR(HttpStatus status, String message, List<Error> errors) {
-        return (JsonResult<T>) JsonResult.builder()
+    public static <T> ApiJsonResult<T> ERROR(HttpStatus status, String message, List<ApiJsonError> errors) {
+        return (ApiJsonResult<T>) ApiJsonResult.builder()
                 .transaction_time(LocalDateTime.now())
                 .status(status)
                 .message(message)
