@@ -8,6 +8,7 @@ import study.springboot.bookmanager.core.common.entity.BaseEntity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "hc_user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
