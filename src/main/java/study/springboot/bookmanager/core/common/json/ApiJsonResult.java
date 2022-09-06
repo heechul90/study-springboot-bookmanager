@@ -15,7 +15,7 @@ public class ApiJsonResult<T> {
 
     private LocalDateTime transaction_time;
     private HttpStatus status;
-    private String message = "";
+    private String message;
 
     private List<ApiJsonError> errors;
     private T data;
