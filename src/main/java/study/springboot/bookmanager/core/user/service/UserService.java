@@ -53,8 +53,7 @@ public class UserService {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFound(ENTITY_NAME, userId));
         findUser.updateUserBuilder()
-                .name(param.getName())
-                .email(param.getEmail())
+                .param(param)
                 .build();
     }
 

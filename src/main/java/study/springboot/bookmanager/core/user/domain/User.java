@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import study.springboot.bookmanager.core.common.entity.BaseEntity;
+import study.springboot.bookmanager.core.user.dto.UpdateUserParam;
 
 import javax.persistence.*;
 
@@ -36,8 +37,8 @@ public class User extends BaseEntity {
      * User 수정
      */
     @Builder(builderClassName = "updateUserBuilder", builderMethodName = "updateUserBuilder")
-    public void updateUser(String name, String email) {
-        this.name = name;
-        this.email = email;
+    public void updateUser(UpdateUserParam param) {
+        this.name = param.getName();
+        this.email = param.getEmail();
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import study.springboot.bookmanager.core.common.dto.SearchCondition;
 import study.springboot.bookmanager.core.common.exception.EntityNotFound;
 import study.springboot.bookmanager.core.user.domain.User;
+import study.springboot.bookmanager.core.user.dto.UpdateUserParam;
 import study.springboot.bookmanager.core.user.dto.UserSearchCondition;
 import study.springboot.bookmanager.core.user.repository.UserQueryRepository;
 import study.springboot.bookmanager.core.user.repository.UserRepository;
@@ -35,7 +36,7 @@ class UserServiceTest {
     public static final String EMAIL = "test_email";
 
     //UPDATE_USER_DATA
-    public static final String UPDATE_USER = "update_user";
+    public static final String UPDATE_NAME = "update_user";
     public static final String UPDATE_EMAIL = "update_email";
 
     //VALIDATION_MESSAGE
@@ -133,7 +134,24 @@ class UserServiceTest {
     @Test
     @DisplayName(value = "유저 수정")
     void updateUserTest() {
+        //given
+        User user = getUser(NAME, EMAIL);
+        given(userRepository.findById(any())).willReturn(Optional.ofNullable(user));
 
+        UpdateUserParam param = UpdateUserParam.builder()
+                .name(UPDATE_NAME)
+                .email(UPDATE_EMAIL)
+                .build();
+
+        //when
+        userService.updateUser(any(), param);
+
+        //then
+        assertThat(user.getName()).isEqualTo(UPDATE_NAME);
+        assertThat(user.getEmail()).isEqualTo(UPDATE_EMAIL);
+
+        //verify
+        verify(userRepository, times(1)).findById(any());
     }
 
     @Test
