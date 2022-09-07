@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import study.springboot.bookmanager.core.common.dto.SearchCondition;
+import study.springboot.bookmanager.core.common.exception.EntityNotFound;
 import study.springboot.bookmanager.core.user.domain.User;
 import study.springboot.bookmanager.core.user.dto.UserSearchCondition;
 import study.springboot.bookmanager.core.user.repository.UserQueryRepository;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -37,6 +39,8 @@ class UserServiceTest {
     public static final String UPDATE_EMAIL = "update_email";
 
     //VALIDATION_MESSAGE
+    public static final String HAS_MESSAGE_STARTING_WITH = "존재하지 않는 User";
+    public static final String HAS_MESSAGE_ENDING_WITH = "id = ";
 
     @InjectMocks UserService userService;
 
@@ -99,17 +103,66 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName(value = "유저 단건 조회_예외 발생")
+    void findUserTest_validation() {
+        //expected
+        assertThatThrownBy(() -> userService.findUser(0L))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + 0);
+
+        //then
+        verify(userRepository, times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName(value = "유저 저장")
     void saveUserTest() {
+        //given
+        User user = getUser(NAME, EMAIL);
+        //given(user)
+
+        //when
+
+
+        //then
     }
 
     @Test
     @DisplayName(value = "유저 수정")
     void updateUserTest() {
+
+    }
+
+    @Test
+    @DisplayName(value = "유저 수정_예외 발생")
+    void updateUserTest_validation() {
+        //expected
+        assertThatThrownBy(() -> userService.updateUser(0L, any()))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + 0);
+
+        //then
+        verify(userRepository, times(1)).findById(any());
     }
 
     @Test
     @DisplayName(value = "유저 삭제")
     void deleteUserTest() {
+
+    }
+
+    @Test
+    @DisplayName(value = "유저 삭제_예외 발생")
+    void deleteUserTest_validation() {
+        //expected
+        assertThatThrownBy(() -> userService.deleteUser(0L))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + 0);
+
+        //then
+        verify(userRepository, times(1)).findById(any());
     }
 }
