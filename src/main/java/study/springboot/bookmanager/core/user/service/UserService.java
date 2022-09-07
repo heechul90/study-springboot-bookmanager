@@ -42,8 +42,8 @@ public class UserService {
      * 유저 저장
      */
     @Transactional
-    public Long saveUser(User user) {
-        return userRepository.save(user).getId();
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     /**

@@ -120,12 +120,14 @@ class UserServiceTest {
     void saveUserTest() {
         //given
         User user = getUser(NAME, EMAIL);
-        //given(user)
+        given(userRepository.save(any())).willReturn(user);
 
         //when
-
+        User savedUser = userService.saveUser(user);
 
         //then
+        assertThat(savedUser.getName()).isEqualTo(NAME);
+        assertThat(savedUser.getEmail()).isEqualTo(EMAIL);
     }
 
     @Test
