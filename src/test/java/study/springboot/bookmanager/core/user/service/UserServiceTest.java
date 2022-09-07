@@ -170,7 +170,24 @@ class UserServiceTest {
     @Test
     @DisplayName(value = "유저 삭제")
     void deleteUserTest() {
+        //given
+        User user = getUser(NAME, EMAIL);
+        given(userRepository.findById(any())).willReturn(Optional.ofNullable(user));
 
+        //when
+        userService.deleteUser(any());
+
+        //then
+        assertThat(user.getName()).isEmpty();
+        /*assertThatThrownBy(() -> userService.findUser(user.getId()))
+                .isInstanceOf(EntityNotFound.class)
+                .hasMessageStartingWith(HAS_MESSAGE_STARTING_WITH)
+                .hasMessageEndingWith(HAS_MESSAGE_ENDING_WITH + user.getId());*/
+
+
+        //verify
+        verify(userRepository, times(1)).findById(any());
+        verify(userRepository, times(1)).delete(any());
     }
 
     @Test
