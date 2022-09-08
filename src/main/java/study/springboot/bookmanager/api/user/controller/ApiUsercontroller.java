@@ -32,12 +32,7 @@ public class ApiUsercontroller {
     public ApiJsonResult findUsers(UserSearchCondition condition, Pageable pageable) {
         Page<User> content = userService.findUsers(condition, pageable);
         List<UserDto> users = content.getContent().stream()
-                .map(user -> UserDto.builder()
-                        .userId(user.getId())
-                        .userName(user.getName())
-                        .email(user.getEmail())
-                        .build()
-                )
+                .map(user -> new UserDto(user))
                 .collect(Collectors.toList());
 
         return ApiJsonResult.OK(users);
