@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.springboot.bookmanager.api.user.request.CreateUserRequest;
+import study.springboot.bookmanager.api.user.request.UpdateUserRequest;
 import study.springboot.bookmanager.api.user.response.CreateUserResponse;
+import study.springboot.bookmanager.api.user.response.UpdateUserResponse;
 import study.springboot.bookmanager.core.common.json.ApiJsonResult;
 import study.springboot.bookmanager.core.user.domain.User;
 import study.springboot.bookmanager.core.user.dto.UserDto;
@@ -58,12 +60,25 @@ public class ApiUsercontroller {
         request.validate();
 
         User savedUser = userService.saveUser(request.toEntity());
+
         return ApiJsonResult.OK(new CreateUserResponse(savedUser.getId()));
     }
 
     /**
      * 유저 수정
      */
+    @PutMapping(value = "{id}")
+    public ApiJsonResult updateUser(@PathVariable("id") Long userId,
+                                    @RequestBody @Validated UpdateUserRequest request) {
+
+        //validate
+        request.validate();
+
+        userService.updateUser(userId, request.toParam());
+        User updatedUser = userService.findUser(userId);
+
+        return ApiJsonResult.OK(new UpdateUserResponse(updatedUser.getId()));
+    }
 
     /**
      * 유저 삭제

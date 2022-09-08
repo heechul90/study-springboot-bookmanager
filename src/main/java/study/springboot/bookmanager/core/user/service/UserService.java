@@ -49,6 +49,7 @@ public class UserService {
     /**
      * 유저 수정
      */
+    @Transactional
     public void updateUser(Long userId, UpdateUserParam param) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFound(ENTITY_NAME, userId));
