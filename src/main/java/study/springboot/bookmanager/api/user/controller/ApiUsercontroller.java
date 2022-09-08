@@ -83,6 +83,11 @@ public class ApiUsercontroller {
     /**
      * 유저 삭제
      */
+    @DeleteMapping(value = "{id}")
+    public ApiJsonResult deleteUser(@PathVariable("id") Long userId) {
 
+        userService.deleteUser(userId);
 
+        return ApiJsonResult.OK();
+    }
 }
