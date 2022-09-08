@@ -41,6 +41,12 @@ public class ApiUsercontroller {
     /**
      * 유저 단건 조회
      */
+    @GetMapping(value = "/{id}")
+    public ApiJsonResult findUser(@PathVariable("id") Long userId) {
+        User findUser = userService.findUser(userId);
+        UserDto user = new UserDto(findUser);
+        return ApiJsonResult.OK(user);
+    }
 
     /**
      * 유저 저장
