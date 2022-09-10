@@ -13,6 +13,8 @@ import study.springboot.bookmanager.core.user.dto.UserSearchCondition;
 import study.springboot.bookmanager.core.user.repository.UserQueryRepository;
 import study.springboot.bookmanager.core.user.repository.UserRepository;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -66,6 +68,13 @@ public class UserService {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFound(ENTITY_NAME, userId));
         userRepository.delete(findUser);
+    }
+
+    /**
+     * 유저 조회 By Name
+     */
+    public List<User> findByName(String name) {
+        return userRepository.findByName(name);
     }
 
 }

@@ -174,11 +174,8 @@ class UserServiceTest {
         User user = getUser(NAME, EMAIL);
         given(userRepository.findById(any())).willReturn(Optional.ofNullable(user));
 
-
-
         //when
         userService.deleteUser(any());
-
 
         //verify
         verify(userRepository, times(1)).findById(any());
@@ -196,5 +193,26 @@ class UserServiceTest {
 
         //then
         verify(userRepository, times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName(value = "유저 조회 By Name")
+    void findByName() {
+        //given
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            users.add(getUser(NAME + i, EMAIL + i));
+        }
+        given(userRepository.findByName(any())).willReturn(users);
+
+        //when
+        List<User> findUsers = userRepository.findByName(NAME);
+
+        //then
+        assertThat(findUsers.size()).isEqualTo(10);
+        assertThat(findUsers).extracting("name").contains(NAME + "0", NAME + "9");
+
+        //verify
+        verify(userRepository, times(1)).findByName(any());
     }
 }
