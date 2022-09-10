@@ -38,6 +38,4 @@ public class UpdateUserRequest {
             throw new JsonInvalidRequest(errors);
         }
     }
-
-
 }
