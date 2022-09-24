@@ -24,6 +24,9 @@ public class User extends BaseTimeEntity {
 
     private String email;
 
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
+
     //===생성 메서드===//
     /**
      * User 생성
